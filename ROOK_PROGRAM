@@ -1,0 +1,112 @@
+from position import Position
+from piece import Piece
+
+
+class Rook(Piece):
+    """
+    The Rook ('Tour' in French, symbol 'R').
+
+    Inherits from Piece and implements straight-line movement
+    along ranks (rows) and files (columns).
+    """
+
+    def symbol(self) -> str:
+        """Return the piece symbol used in move notation and display."""
+        return "R"
+
+    def isValidMove(self, newPosition: Position, board) -> bool:
+        """
+        Return True if moving to *newPosition* is a legal rook move.
+
+        Rules checked:
+            1. Must stay on the same row OR same column (not both = stay,
+               not neither = diagonal).
+            2. Path between current and destination must be clear.
+            3. Destination must be empty or occupied by an enemy piece.
+
+        Parameters
+        ----------
+        newPosition : Position
+            The target square.
+        board : Board
+            Current board state.
+
+        Returns
+        -------
+        bool
+        """
+        current = self._position
+        if current is None:
+            return False  # captured piece cannot move
+
+        # --- Rule 1: must move along a rank or file ---
+        same_col = current.column == newPosition.column
+        same_row = current.row == newPosition.row
+
+        if not (same_col ^ same_row):   # XOR: exactly one must be true
+            return False
+
+        # --- Rule 2: path must be clear ---
+        if not board.isPathClear(current, newPosition):
+            return False
+
+        # --- Rule 3: destination must be empty or enemy ---
+        occupant = board.getPiece(newPosition)
+        if occupant is not None and occupant.color == self._color:
+            return False  # can't capture own piece
+
+        return True
+
+
+# ----------------------------------------------------------------------
+# Functional test block — run with: python rook.py
+# ----------------------------------------------------------------------
+
+if __name__ == "__main__":
+    from board import Board
+
+    print("=== Functional tests: Rook ===\n")
+
+    board = Board()
+
+    # Place a white rook at a1
+    rook = Rook(Position("a", 1), 0)
+    board.placePiece(rook, Position("a", 1))
+
+    # Valid: move along file (a1 → a5)
+    assert rook.isValidMove(Position("a", 5), board), "a1→a5 should be valid (empty file)"
+    print("Test 1 passed: a1 → a5 (clear file).")
+
+    # Valid: move along rank (a1 → h1)
+    assert rook.isValidMove(Position("h", 1), board), "a1→h1 should be valid (empty rank)"
+    print("Test 2 passed: a1 → h1 (clear rank).")
+
+    # Invalid: diagonal move
+    assert not rook.isValidMove(Position("d", 4), board), "Diagonal should be invalid"
+    print("Test 3 passed: a1 → d4 (diagonal) correctly rejected.")
+
+    # Blocked by own piece
+    blocker = Rook(Position("a", 3), 0)   # white piece blocks path
+    board.placePiece(blocker, Position("a", 3))
+    assert not rook.isValidMove(Position("a", 5), board), "Path blocked by own piece"
+    print("Test 4 passed: a1 → a5 blocked by own rook at a3.")
+
+    # Can capture an enemy piece
+    from piece import Piece as _P
+    class _Enemy(Piece):
+        def symbol(self): return "R"
+        def isValidMove(self, np, b): return True
+
+    enemy = _Enemy(Position("a", 3), 1)   # black piece at a3
+    board.removePiece(blocker)
+    board.placePiece(enemy, Position("a", 3))
+    assert rook.isValidMove(Position("a", 3), board), "Should be able to capture enemy"
+    print("Test 5 passed: a1 → a3 captures enemy piece.")
+
+    # Cannot capture own piece
+    own = Rook(Position("h", 1), 0)
+    board.placePiece(own, Position("h", 1))
+    assert not rook.isValidMove(Position("h", 1), board), "Can't capture own piece"
+    print("Test 6 passed: a1 → h1 blocked by own rook.")
+
+    print("\nAll Rook tests passed!")
