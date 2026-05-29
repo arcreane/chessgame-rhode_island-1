@@ -61,3 +61,22 @@ class Piece(ABC):
         bool
             True if the move is legal according to chess rules.
         """
+    
+    # ------------------------------------------------------------------
+    # Image filename helper  (used by the graphical board)
+    # ------------------------------------------------------------------
+
+    def image_filename(self) -> str:
+        color_letter = "w" if self._color == 0 else "b"
+        return f"{self.symbol()}{color_letter}.png"
+
+    def __str__(self) -> str:
+        """Return the piece symbol (K, Q, B, N, R or P)."""
+        return self.symbol()
+
+    def __repr__(self) -> str:
+        return (
+            f"{self.__class__.__name__}("
+            f"position={self._position!r}, "
+            f"color={self._color})"
+        )
