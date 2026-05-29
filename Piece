@@ -120,3 +120,12 @@ if __name__ == "__main__":
     # Move position via setter
     rook.position = Position("d", 4)
     assert str(rook.position) == "d4"
+
+    # Invalid color
+    try:
+        _TestRook(pos, 2)
+        assert False, "Should have raised ValueError"
+    except ValueError as exc:
+        print(f"Caught expected error: {exc}")
+
+    print("\nAll Piece tests passed!")
