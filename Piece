@@ -31,3 +31,33 @@ class Piece(ABC):
     def color_name(self) -> str:
         """Human-readable color string."""
         return "white" if self._color == 0 else "black"
+
+
+    # ------------------------------------------------------------------
+    # Abstract interface — subclasses MUST implement these
+    # ------------------------------------------------------------------
+
+    @abstractmethod
+    def symbol(self) -> str:
+        """
+        Return the single uppercase letter identifying the piece type.
+        K=King, Q=Queen, B=Bishop, N=Knight, R=Rook, P=Pawn.
+        """
+
+    @abstractmethod
+    def isValidMove(self, newPosition: Position, board) -> bool:
+        """
+        Decide whether moving this piece to newPosition is legal.
+
+        Parameters
+        ----------
+        newPosition : Position
+            Target square.
+        board : Board
+            Current board state (used to check for blocking pieces, etc.)
+
+        Returns
+        -------
+        bool
+            True if the move is legal according to chess rules.
+        """
