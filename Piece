@@ -1,0 +1,33 @@
+from abc import ABC, abstractmethod
+from position import Position
+
+
+class Piece(ABC):
+
+    def __init__(self, position: Position, color: int):
+        if color not in (0, 1):
+            raise ValueError("color must be 0 (white) or 1 (black).")
+        self._position = position
+        self._color = color
+
+    # ------------------------------------------------------------------
+    # Getters / Setters
+    # ------------------------------------------------------------------
+
+    @property
+    def position(self) -> Position:
+        return self._position
+
+    @position.setter
+    def position(self, value: Position):
+        self._position = value
+
+    @property
+    def color(self) -> int:
+        """Piece color: 0 = white, 1 = black."""
+        return self._color
+
+    @property
+    def color_name(self) -> str:
+        """Human-readable color string."""
+        return "white" if self._color == 0 else "black"
