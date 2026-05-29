@@ -61,3 +61,30 @@ class Position:
 
     def __hash__(self):
         return hash((self._column, self._row))
+# Functional test block — run with: python position.py
+
+if __name__ == "__main__":
+    print("=== Functional tests: Position ===\n")
+
+    p1 = Position("e", 4)
+    print(f"Position created: {p1}")        # Expected: e4
+    assert str(p1) == "e4"
+
+    p2 = Position("A", 1)                  # uppercase should be accepted
+    print(f"Position created: {p2}")        # Expected: a1
+    assert str(p2) == "a1"
+
+    p3 = Position("h", 8)
+    print(f"Position created: {p3}")        # Expected: h8
+    assert str(p3) == "h8"
+
+    # Equality
+    p4 = Position("e", 4)
+    assert p1 == p4, "Equal positions should be equal"
+    assert p1 != p2, "Different positions should not be equal"
+
+    # col_index
+    assert Position("a", 1).col_index == 0
+    assert Position("h", 1).col_index == 7
+
+    
