@@ -87,4 +87,17 @@ if __name__ == "__main__":
     assert Position("a", 1).col_index == 0
     assert Position("h", 1).col_index == 7
 
-    
+    # Invalid inputs
+    try:
+        Position("z", 4)
+        assert False, "Should have raised ValueError"
+    except ValueError as exc:
+        print(f"Caught expected error: {exc}")
+
+    try:
+        Position("a", 9)
+        assert False, "Should have raised ValueError"
+    except ValueError as exc:
+        print(f"Caught expected error: {exc}")
+
+    print("\nAll Position tests passed!")
