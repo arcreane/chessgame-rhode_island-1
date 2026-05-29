@@ -1,0 +1,13 @@
+class Position:
+
+    VALID_COLUMNS = list("abcdefgh")
+    VALID_ROWS = list(range(1, 9))
+
+    def __init__(self, column: str, row: int):
+        column = column.lower()
+        if column not in self.VALID_COLUMNS:
+            raise ValueError(f"Invalid column '{column}'. Must be one of {self.VALID_COLUMNS}.")
+        if row not in self.VALID_ROWS:
+            raise ValueError(f"Invalid row '{row}'. Must be between 1 and 8.")
+        self._column = column
+        self._row = row
