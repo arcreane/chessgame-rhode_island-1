@@ -80,3 +80,43 @@ class Piece(ABC):
             f"position={self._position!r}, "
             f"color={self._color})"
         )
+    
+# Functional test block — run with: python piece.py
+
+if __name__ == "__main__":
+
+    class _TestRook(Piece):
+        """Minimal Rook used only for testing the Piece base class."""
+        def symbol(self) -> str:
+            return "R"
+
+        def isValidMove(self, newPosition, board) -> bool:
+            # Stub — always True for testing purposes
+            return True
+
+    print("=== Functional tests: Piece (via _TestRook) ===\n")
+
+    pos = Position("a", 1)
+    rook = _TestRook(pos, 0)          # white rook at a1
+
+    print(f"Piece str:        {rook}")                   # Expected: R
+    print(f"Piece repr:       {rook!r}")
+    print(f"Color:            {rook.color}")              # Expected: 0
+    print(f"Color name:       {rook.color_name}")         # Expected: white
+    print(f"Position:         {rook.position}")           # Expected: a1
+    print(f"Image filename:   {rook.image_filename()}")   # Expected: Rw.png
+
+    assert str(rook) == "R"
+    assert rook.color == 0
+    assert rook.color_name == "white"
+    assert rook.image_filename() == "Rw.png"
+    assert rook.isValidMove(Position("a", 5), None) is True
+
+    # Black piece
+    black_rook = _TestRook(Position("a", 8), 1)
+    assert black_rook.image_filename() == "Rb.png"
+    assert black_rook.color_name == "black"
+
+    # Move position via setter
+    rook.position = Position("d", 4)
+    assert str(rook.position) == "d4"
