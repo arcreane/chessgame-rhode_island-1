@@ -11,3 +11,53 @@ class Position:
             raise ValueError(f"Invalid row '{row}'. Must be between 1 and 8.")
         self._column = column
         self._row = row
+
+
+    # Getters / Setters
+
+    @property
+    def column(self) -> str:
+        """The column letter ('a'–'h')."""
+        return self._column
+
+    @column.setter
+    def column(self, value: str):
+        value = value.lower()
+        if value not in self.VALID_COLUMNS:
+            raise ValueError(f"Invalid column '{value}'.")
+        self._column = value
+
+    @property
+    def row(self) -> int:
+        """The row number (1–8)."""
+        return self._row
+
+    @row.setter
+    def row(self, value: int):
+        if value not in self.VALID_ROWS:
+            raise ValueError(f"Invalid row '{value}'.")
+        self._row = value
+
+    # Helper: numeric index of the column (0 = 'a', 7 = 'h')
+
+    @property
+    def col_index(self) -> int:
+        """Zero-based column index (0 for 'a', 7 for 'h')."""
+        return self.VALID_COLUMNS.index(self._column)
+
+    # Dunder methods
+
+    def __str__(self) -> str:
+        """Return the position in standard chess notation, e.g. 'e4'."""
+        return f"{self._column}{self._row}"
+
+    def __repr__(self) -> str:
+        return f"Position('{self._column}', {self._row})"
+
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, Position):
+            return NotImplemented
+        return self._column == other._column and self._row == other._row
+
+    def __hash__(self):
+        return hash((self._column, self._row))
