@@ -10,8 +10,7 @@ class Bishop(Piece):
         current = self._position
         if current is None:
             return False
-        if current is not None:
-            return True
+        
 
      return self._sliding_moves(board, pos, [(-1, -1), (-1, 1), (1, -1), (1, 1)])
 
