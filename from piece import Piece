@@ -1,34 +1,39 @@
-
 from position import Position
 from piece import Piece
 
-class Bishop(Piece):
 
+class Bishop(Piece):
 
     def symbol(self) -> str:
         return "B"
 
     def isValidMove(self, newPosition: Position, board) -> bool:
-    current_row = self._position.row
+      
+        current_row = self._position.row
         current_col = self._position.col
         new_row = newPosition.row
         new_col = newPosition.col
-        
+
+       
         row_delta = abs(new_row - current_row)
         col_delta = abs(ord(new_col) - ord(current_col))
-        
+
+      
         if row_delta != col_delta or row_delta == 0:
             return False
-        
+
+       
         if not board.isPathClear(self._position, newPosition):
             return False
-        
+
+      
         target_piece = board.getPiece(newPosition)
         if target_piece is not None and target_piece._color == self._color:
             return False
-        
+
         return True
-       
+
+
 if __name__ == "__main__":
     b = Bishop(Position("c", 1), 0)
     print(f"Bishop created: {b}, image: {b.image_filename()}")
