@@ -9,3 +9,9 @@ class Knight(Piece):
         Return True if the move is a valid L-shape knight move.
         TODO: replace stub with real implementation.
         """
+if __name__ == "__main__":
+    k = Knight(Position("b", 1), 0)
+    print(f"Knight created: {k}, image: {k.image_filename()}")
+    assert k.symbol() == "N"
+    assert k.image_filename() == "Nw.png"
+    print("Knight functional test passed!")
