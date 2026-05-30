@@ -4,3 +4,8 @@ class Knight(Piece):
     """The Knight ('Cavalier', symbol 'N'). Moves in an L-shape."""
     def symbol(self) -> str:
         return "N"
+     def isValidMove(self, newPosition: Position, board) -> bool:
+        """
+        Return True if the move is a valid L-shape knight move.
+        TODO: replace stub with real implementation.
+        """
