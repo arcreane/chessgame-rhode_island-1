@@ -1,0 +1,27 @@
+from piece import Piece
+
+
+class Bishop(Piece):
+    def __init__(self, color: str):
+        symbol = '♗' if color == 'white' else '♝'
+        super().__init__(color, symbol)
+
+    def get_valid_moves(self, board, pos):
+        return self._sliding_moves(board, pos, [(-1, -1), (-1, 1), (1, -1), (1, 1)])
+
+    def _sliding_moves(self, board, pos, directions):
+        moves = []
+        r, c = pos
+        for dr, dc in directions:
+            nr, nc = r + dr, c + dc
+            while 0 <= nr < 8 and 0 <= nc < 8:
+                target = board.get_piece(nr, nc)
+                if target is None:
+                    moves.append((nr, nc))
+                else:
+                    if target.color != self.color:
+                        moves.append((nr, nc))
+                    break
+                nr += dr
+                nc += dc
+        return moves
