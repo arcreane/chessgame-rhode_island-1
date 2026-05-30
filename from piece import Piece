@@ -1,32 +1,25 @@
+
+from position import Position
 from piece import Piece
 
-
 class Bishop(Piece):
-    def __init__(self, color: str):
-        symbol = '♗' if color == 'white' else '♝'
-        super().__init__(color, symbol)
 
-    def isValidMove(self,newPosition: Position, board):
-        current = self._position
-        if current is None:
-            return False
-        
 
-     return self._sliding_moves(board, pos, [(-1, -1), (-1, 1), (1, -1), (1, 1)])
+    def symbol(self) -> str:
+        return "B"
 
-    def _sliding_moves(self, board, Position, directions):
-        moves = []
-        r, c = pos
-        for dr, dc in directions:
-            nr, nc = r + dr, c + dc
-            while 0 <= nr < 8 and 0 <= nc < 8:
-                target = board.get_piece(nr, nc)
-                if target is None:
-                    moves.append((nr, nc))
-                else:
-                    if target.color != self.color:
-                        moves.append((nr, nc))
-                    break
-                nr += dr
-                nc += dc
-        return moves
+    def isValidMove(self, newPosition: Position, board) -> bool:
+        # --- TODO ---
+        # col_delta = abs(col_index_new - col_index_current)
+        # row_delta = abs(newPosition.row - self._position.row)
+        # Valid if col_delta == row_delta (and > 0)
+        # Use board.isPathClear() to check for blocking pieces.
+        # Destination must not be a same-color piece.
+        return True   # stub
+
+if __name__ == "__main__":
+    b = Bishop(Position("c", 1), 0)
+    print(f"Bishop created: {b}, image: {b.image_filename()}")
+    assert b.symbol() == "B"
+    assert b.image_filename() == "Bw.png"
+    print("Bishop functional test passed!")
