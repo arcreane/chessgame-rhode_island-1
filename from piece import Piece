@@ -10,13 +10,13 @@ class Bishop(Piece):
     def isValidMove(self, newPosition: Position, board) -> bool:
       
         current_row = self._position.row
-        current_col = self._position.col
+        current_col = self._position.column
         new_row = newPosition.row
-        new_col = newPosition.col
+        new_col = newPosition.column
 
        
         row_delta = abs(new_row - current_row)
-        col_delta = abs(ord(new_col) - ord(current_col))
+        col_delta = abs(ord(new_column) - ord(current_column))
 
       
         if row_delta != col_delta or row_delta == 0:
