@@ -2,3 +2,5 @@ from position import Position
 from piece import Piece
 class Knight(Piece):
     """The Knight ('Cavalier', symbol 'N'). Moves in an L-shape."""
+    def symbol(self) -> str:
+        return "N"
