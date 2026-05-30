@@ -9,14 +9,26 @@ class Bishop(Piece):
         return "B"
 
     def isValidMove(self, newPosition: Position, board) -> bool:
-        # --- TODO ---
-        # col_delta = abs(col_index_new - col_index_current)
-        # row_delta = abs(newPosition.row - self._position.row)
-        # Valid if col_delta == row_delta (and > 0)
-        # Use board.isPathClear() to check for blocking pieces.
-        # Destination must not be a same-color piece.
-        return True   # stub
-
+    current_row = self._position.row
+        current_col = self._position.col
+        new_row = newPosition.row
+        new_col = newPosition.col
+        
+        row_delta = abs(new_row - current_row)
+        col_delta = abs(ord(new_col) - ord(current_col))
+        
+        if row_delta != col_delta or row_delta == 0:
+            return False
+        
+        if not board.isPathClear(self._position, newPosition):
+            return False
+        
+        target_piece = board.getPiece(newPosition)
+        if target_piece is not None and target_piece._color == self._color:
+            return False
+        
+        return True
+       
 if __name__ == "__main__":
     b = Bishop(Position("c", 1), 0)
     print(f"Bishop created: {b}, image: {b.image_filename()}")
