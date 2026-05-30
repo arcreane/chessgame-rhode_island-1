@@ -6,10 +6,16 @@ class Bishop(Piece):
         symbol = '♗' if color == 'white' else '♝'
         super().__init__(color, symbol)
 
-    def get_valid_moves(self, board, pos):
-        return self._sliding_moves(board, pos, [(-1, -1), (-1, 1), (1, -1), (1, 1)])
+    def isValidMove(self,newPosition: Position, board):
+        current = self._position
+        if current is None:
+            return False
+        if current is not None:
+            return True
 
-    def _sliding_moves(self, board, pos, directions):
+     return self._sliding_moves(board, pos, [(-1, -1), (-1, 1), (1, -1), (1, 1)])
+
+    def _sliding_moves(self, board, Position, directions):
         moves = []
         r, c = pos
         for dr, dc in directions:
